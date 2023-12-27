@@ -27,7 +27,7 @@ def load_image(name, colorkey=None):
 
 
 # Класс танка
-class Tank(pygame.sprite.Sprite):
+class Tank1(pygame.sprite.Sprite):
     image = load_image('tiger.png')
 
     # Загрузка картинки
@@ -35,7 +35,7 @@ class Tank(pygame.sprite.Sprite):
         # НЕОБХОДИМО вызвать конструктор родительского класса Sprite.
         # Это очень важно!!!
         super().__init__(group)
-        self.image = Tank.image
+        self.image = Tank1.image
         self.rect = self.image.get_rect()
         self.rect.x = 100
         self.rect.y = 100
@@ -44,22 +44,52 @@ class Tank(pygame.sprite.Sprite):
     def update(self, event):
         if event[pygame.K_UP]:
             self.rect = self.rect.move(0, -10)
-            self.image = pygame.transform.rotate(Tank.image, -90)
+            self.image = pygame.transform.rotate(Tank1.image, -90)
         if event[pygame.K_DOWN]:
             self.rect = self.rect.move(0, 10)
-            self.image = pygame.transform.rotate(Tank.image, 90)
+            self.image = pygame.transform.rotate(Tank1.image, 90)
         if event[pygame.K_RIGHT]:
             self.rect = self.rect.move(10, 0)
-            self.image = pygame.transform.flip(Tank.image, True, False)
+            self.image = pygame.transform.flip(Tank1.image, True, False)
         if event[pygame.K_LEFT]:
             self.rect = self.rect.move(-10, 0)
-            self.image = Tank.image
+            self.image = Tank1.image
+
+
+class Tank2(pygame.sprite.Sprite):
+    image = load_image('tiger.png')
+
+    # Загрузка картинки
+    def __init__(self, group):
+        # НЕОБХОДИМО вызвать конструктор родительского класса Sprite.
+        # Это очень важно!!!
+        super().__init__(group)
+        self.image = Tank2.image
+        self.rect = self.image.get_rect()
+        self.rect.x = 0
+        self.rect.y = 0
+
+    # Обработка нажатий на стрелочки
+    def update(self, event):
+        if event[pygame.K_w]:
+            self.rect = self.rect.move(0, -10)
+            self.image = pygame.transform.rotate(Tank2.image, -90)
+        if event[pygame.K_s]:
+            self.rect = self.rect.move(0, 10)
+            self.image = pygame.transform.rotate(Tank2.image, 90)
+        if event[pygame.K_d]:
+            self.rect = self.rect.move(10, 0)
+            self.image = pygame.transform.flip(Tank2.image, True, False)
+        if event[pygame.K_a]:
+            self.rect = self.rect.move(-10, 0)
+            self.image = Tank2.image
 
 
 # Запуск
 def main():
     all_sprites = pygame.sprite.Group()
-    Tank(all_sprites)
+    Tank1(all_sprites)
+    Tank2(all_sprites)
     running = True
     while running:
         keys = pygame.key.get_pressed()
