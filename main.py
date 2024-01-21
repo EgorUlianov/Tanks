@@ -11,7 +11,7 @@ window = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 
 fontUI = pygame.font.Font(None, 30)
-
+# Кирпичи и степени деградации
 imgBrick = [
     pygame.image.load('data/brick1.png'),
     pygame.image.load('data/brick2.png'),
@@ -19,6 +19,7 @@ imgBrick = [
     pygame.image.load('data/brick4.png'),
     pygame.image.load('data/metall wall.png')
 ]
+# Танки
 imgTanks = [
     pygame.image.load('data/t1.png'),
     pygame.image.load('data/t2.png')
@@ -32,6 +33,7 @@ imgBangs = [
 DIRECTS = [[0, -1], [1, 0], [0, 1], [-1, 0]]
 
 
+# Прорисовка
 class UI:
     def __init__(self):
         pass
@@ -51,6 +53,7 @@ class UI:
                 i += 1
 
 
+# Танк
 class Tank:
     def __init__(self, color, px, py, direct, keyList):
         objects.append(self)
@@ -79,6 +82,7 @@ class Tank:
         self.image = pygame.transform.rotate(imgTanks[self.rank], -self.direct * 90)
         self.rect = self.image.get_rect(center=self.rect.center)
 
+    # Движение Танка
     def update(self):
         self.image = pygame.transform.rotate(imgTanks[self.rank], -self.direct * 90)
         self.image = pygame.transform.scale(self.image, (self.image.get_width() - 5, self.image.get_height() - 5))
@@ -102,6 +106,7 @@ class Tank:
             if obj != self and (obj.type == 'block' or obj.type == 'border') and self.rect.colliderect(obj.rect):
                 self.rect.topleft = oldX, oldY
 
+        # Стрельба
         if keys[self.keySHOT] and self.shotTimer == 0:
             dx = DIRECTS[self.direct][0] * self.bulletSpeed
             dy = DIRECTS[self.direct][1] * self.bulletSpeed
@@ -113,6 +118,7 @@ class Tank:
     def draw(self):
         window.blit(self.image, self.rect)
 
+    # Получение урона
     def damage(self, value):
         self.hp -= value
         if self.hp <= 0:
@@ -121,6 +127,7 @@ class Tank:
             print(self.color, 'dead')
 
 
+# Пули
 class Bullet:
     def __init__(self, parent, px, py, dx, dy, damage):
         bullets.append(self)
@@ -128,7 +135,7 @@ class Bullet:
         self.px, self.py = px, py
         self.dx, self.dy = dx, dy
         self.damage = damage
-
+    # Движение пули
     def update(self):
         self.px += self.dx
         self.py += self.dy
@@ -147,6 +154,7 @@ class Bullet:
         pygame.draw.circle(window, 'yellow', (self.px, self.py), 2)
 
 
+# Взрыв
 class Bang:
     def __init__(self, px, py, frame):
         objects.append(self)
@@ -165,6 +173,7 @@ class Bang:
         window.blit(image, rect)
 
 
+# Кирпичные стены
 class Block:
     def __init__(self, px, py, size):
         objects.append(self)
@@ -179,11 +188,13 @@ class Block:
     def draw(self):
         window.blit(imgBrick[self.hp - 1], self.rect)
 
+    # Получение урона
     def damage(self, value):
         self.hp -= value
         if self.hp <= 0: objects.remove(self)
 
 
+# Металлическая стенка
 class MetalBlock:
     def __init__(self, px, py, size):
         objects.append(self)
@@ -202,6 +213,7 @@ class MetalBlock:
         pass
 
 
+# Границы, чтобы танки не уезжали за экран
 class Border():
     # строго вертикальный или строго горизонтальный отрезок
     def __init__(self, x1, y1, x2, y2):
@@ -213,8 +225,10 @@ class Border():
         else:  # горизонтальная стенка
             self.image = pygame.Surface([x2 - x1, 1])
             self.rect = pygame.Rect(x1, y1, x2 - x1, 1)
+
     def update(self):
         pass
+
     def draw(self):
         pass
 
@@ -228,6 +242,7 @@ Border(0, 0, 0, HEIGHT)
 Border(WIDTH, 0, WIDTH, HEIGHT)
 Border(0, 0, WIDTH, 0)
 Border(0, HEIGHT, WIDTH, HEIGHT)
+# Рандом генерация
 for _ in range(50):
     while True:
         x = randint(0, WIDTH // TILE - 1) * TILE
