@@ -99,7 +99,7 @@ class Tank:
             self.direct = 2
 
         for obj in objects:
-            if obj != self and obj.type == 'block' and self.rect.colliderect(obj.rect):
+            if obj != self and (obj.type == 'block' or obj.type == 'border') and self.rect.colliderect(obj.rect):
                 self.rect.topleft = oldX, oldY
 
         if keys[self.keySHOT] and self.shotTimer == 0:
@@ -201,12 +201,33 @@ class MetalBlock:
     def damage(self, value):
         pass
 
+
+class Border():
+    # строго вертикальный или строго горизонтальный отрезок
+    def __init__(self, x1, y1, x2, y2):
+        objects.append(self)
+        self.type = 'border'
+        if x1 == x2:  # вертикальная стенка
+            self.image = pygame.Surface([1, y2 - y1])
+            self.rect = pygame.Rect(x1, y1, 1, y2 - y1)
+        else:  # горизонтальная стенка
+            self.image = pygame.Surface([x2 - x1, 1])
+            self.rect = pygame.Rect(x1, y1, x2 - x1, 1)
+    def update(self):
+        pass
+    def draw(self):
+        pass
+
+
 bullets = []
 objects = []
 Tank('Blue', 100, 275, -1, (pygame.K_a, pygame.K_d, pygame.K_w, pygame.K_s, pygame.K_SPACE))
 Tank('Green', 650, 275, -2, (pygame.K_LEFT, pygame.K_RIGHT, pygame.K_UP, pygame.K_DOWN, pygame.K_KP_ENTER))
 ui = UI()
-
+Border(0, 0, 0, HEIGHT)
+Border(WIDTH, 0, WIDTH, HEIGHT)
+Border(0, 0, WIDTH, 0)
+Border(0, HEIGHT, WIDTH, HEIGHT)
 for _ in range(50):
     while True:
         x = randint(0, WIDTH // TILE - 1) * TILE
