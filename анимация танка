@@ -1,0 +1,43 @@
+import os
+import pygame
+
+pygame.init()
+window_size = (800, 600)
+game_window = pygame.display.set_mode(window_size)
+
+
+class MySprite(pygame.sprite.Sprite):
+    def __init__(self, image_path, x, y):
+        super().__init__()
+        self.image = pygame.image.load(image_path)
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+
+sprite1 = MySprite(os.path.join('Assets', 'mysprite1.png'), 50, 50)
+sprite2 = MySprite(os.path.join('Assets', 'mysprite2.png'), 200, 200)
+
+sprites = pygame.sprite.Group(sprite1, sprite2)
+
+run = True
+while run:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+        sprite1.rect.x -= 5
+    if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+        sprite1.rect.x += 5
+    if keys[pygame.K_UP] or keys[pygame.K_w]:
+        sprite1.rect.y -= 5
+    if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+        sprite1.rect.y += 5
+
+    game_window.fill((0, 0, 0))
+    sprites.draw(game_window)
+    pygame.display.update()
+
+pygame.quit()
