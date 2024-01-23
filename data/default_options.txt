@@ -1,0 +1,6 @@
+Language Русский
+Upward W
+Left A
+Right D
+Backward S
+Shot Space

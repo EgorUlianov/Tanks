@@ -1,0 +1,345 @@
+Index: data/map2.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/data/map2.txt b/data/map2.txt
+new file mode 100644
+--- /dev/null	(date 1705849645178)
++++ b/data/map2.txt	(date 1705849645178)
+@@ -0,0 +1,10 @@
++...+_...*.
++.*.+......
++.*.....-*+
++...*--.-..
++-..*+-.-*.
++--..--..*.
++.***..*+*.
++...++*....
+++*.+..*.*.
++.*..@.***.
+\ No newline at end of file
+Index: generation_level.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/generation_level.py b/generation_level.py
+new file mode 100644
+--- /dev/null	(date 1705849684461)
++++ b/generation_level.py	(date 1705849684461)
+@@ -0,0 +1,148 @@
++import pygame
++import os
++import sys
++
++
++def load_image(name, color_key=None):
++    fullname = os.path.join(name)
++    try:
++        image = pygame.image.load(fullname)
++    except pygame.error as message:
++        print('Не удаётся загрузить:', name)
++        raise SystemExit(message)
++    image = image.convert_alpha()
++    if color_key is not None:
++        if color_key == -1:
++            color_key = image.get_at((0, 0))
++        image.set_colorkey(color_key)
++    return image
++
++
++running = True
++pygame.init()
++size = width, height = 700, 700
++screen = pygame.display.set_mode(size)
++sprite_group = pygame.sprite.Group()
++hero_group = pygame.sprite.Group()
++
++tile_image = {'wall': load_image('brick.png'),
++              'empty': load_image('floor.png'),
++              'mwall': load_image('metall wall.png'),
++              'bush': load_image('bush.png')
++              }
++player_image = load_image('t1.png')
++player2_image = load_image('t2 down.png')
++
++tile_width = tile_height = 57
++
++
++class ScreenFrame(pygame.sprite.Sprite):
++    def __init__(self):
++        super().__init__()
++        self.rect = (0, 0, 500, 500)
++
++
++class SpriteGroup(pygame.sprite.Sprite):
++    def __init__(self):
++        super().__init__()
++
++    def get_event(self, event):
++        for inet in self:
++            inet.get_event(event)
++
++
++class Sprite(pygame.sprite.Sprite):
++    def __init__(self, group):
++        super().__init__(group)
++        self.rect = None
++
++    def get_event(self, event):
++        pass
++
++
++class Tile(Sprite):
++    def __init__(self, tile_type, pos_x, pos_y):
++        super().__init__(sprite_group)
++        self.image = tile_image[tile_type]
++        self.rect = self.image.get_rect().move(tile_width * pos_x, tile_height * pos_y)
++
++class Player2(Sprite):
++    def __init__(self, pos_x, pos_y):
++        super().__init__(hero_group)
++        self.image = player2_image
++        self.rect = self.image.get_rect().move(tile_width * pos_x, tile_height * pos_y)
++        self.pos = (pos_x, pos_y)
++
++        def move(self, x, y):
++            self.pos = (x, y)
++            self.rect = self.image.get_rect().move(tile_width * self.pos[0],
++                                                   tile_height * self.pos[1])
++
++class Player(Sprite):
++    def __init__(self, pos_x, pos_y):
++        super().__init__(hero_group)
++        self.image = player_image
++        self.rect = self.image.get_rect().move(tile_width * pos_x, tile_height * pos_y)
++        self.pos = (pos_x, pos_y)
++
++        def move(self, x, y):
++            self.pos = (x, y)
++            self.rect = self.image.get_rect().move(tile_width * self.pos[0],
++                                                   tile_height * self.pos[1])
++
++
++
++def load_level(filename):
++    filename = 'data/' + filename
++    with open(filename, 'r') as mapFile:
++        level_map = [line.strip() for line in mapFile]
++    max_width = max(map(len, level_map))
++    return list(map(lambda x: list(x.ljust(max_width, '.')), level_map))
++
++
++def generate_level(level):
++    new_player, x, y = None, None, None
++    for y in range(len(level)):
++        for x in range(len(level[y])):
++            if level[y][x] == '.':
++                Tile('empty', x, y)
++            elif level[y][x] == '+':
++                Tile('mwall', x, y)
++            elif level[y][x] == '*':
++                Tile('wall', x, y)
++            elif level[y][x] == '-':
++                Tile('bush', x, y)
++            elif level[y][x] == '@':
++                Tile('empty', x, y)
++                new_player = Player(x, y)
++                level[y][x] = '.'
++            elif level[y][x] == '_':
++                Tile('empty', x, y)
++                new_player = Player2(x, y)
++                level[y][x] = '.'
++    return new_player, x, y
++
++def move(hero, movement):
++    x, y = hero.pos
++    if movement == 'up':
++        if y > 0 and level_map[y - 1][x] == '.':
++            hero.move(x, y - 1)
++    elif movement == 'down':
++        if y < max_y - 1 and level_map[y + 1][x] == '.':
++            hero.move(x, y + 1)
++    elif movement == 'left':
++        if x > 0 and level_map[y][x - 1] == '.':
++            hero.move(x - 1, y)
++    elif movement == 'right':
++        if x < max_x - 1 and level_map[y][x + 1] == '.':
++            hero.move(x + 1, y)
++
++
++level_map = load_level('map2.txt')
++hero, max_x, max_y = generate_level(level_map)
++while running:
++    screen.fill(pygame.Color('white'))
++    sprite_group.draw(screen)
++    hero_group.draw(screen)
++    pygame.display.flip()
++pygame.quit()
+\ No newline at end of file
+Index: data/map.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/data/map.txt b/data/map.txt
+new file mode 100644
+--- /dev/null	(date 1705849645188)
++++ b/data/map.txt	(date 1705849645188)
+@@ -0,0 +1,10 @@
++...._.....
++..*.*.*.*.
++*.*.*.***.
++..*.*.*.*.
++*.**..**.*
++.***..***.
++*.*.*.*.*.
++*.***.*.*.
++*.*.*.*.*.
++....@.....
+\ No newline at end of file
+Index: data/map3.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/data/map3.txt b/data/map3.txt
+new file mode 100644
+--- /dev/null	(date 1705849645199)
++++ b/data/map3.txt	(date 1705849645199)
+@@ -0,0 +1,10 @@
++...._.....
++.***.*.*..
++...*.*.*..
++.***.***..
++.*.....*..
++.***...*..
++.........+
++*.*..+*.*-
++*+..*.*+*-
++---.@..--.
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"559e6b81-8dfe-4bca-adc1-d055ac63675b\" name=\"Changes\" comment=\"A\">\r\n      <change afterPath=\"$PROJECT_DIR$/main.py\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Python Script\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"PUSH_TAGS\">\r\n      <GitPushTagMode>\r\n        <option name=\"argument\" value=\"--tags\" />\r\n        <option name=\"title\" value=\"All\" />\r\n      </GitPushTagMode>\r\n    </option>\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"ветвь-МатвейЛеухин\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 8\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2Zce4FQFigoEbSVEYzRRirWvvLA\" />\r\n  <component name=\"ProjectLevelVcsManager\">\r\n    <OptionsSetting value=\"false\" id=\"Update\" />\r\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"ASKED_ADD_EXTERNAL_FILES\": \"true\",\r\n    \"Python.english.executor\": \"Run\",\r\n    \"Python.languages.executor\": \"Run\",\r\n    \"Python.main.executor\": \"Run\",\r\n    \"Python.russian.executor\": \"Run\",\r\n    \"Python.virtrual.executor\": \"Run\",\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"git-widget-placeholder\": \"ветвь-МатвейЛеухин\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  },\r\n  \"keyToStringList\": {\r\n    \"com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File\": [\r\n      \"Python\"\r\n    ]\r\n  }\r\n}]]></component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-python-sdk-50da183f06c8-2887949eec09-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.13135.95\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"559e6b81-8dfe-4bca-adc1-d055ac63675b\" name=\"Changes\" comment=\"\" />\r\n      <created>1702725602049</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1702725602049</updated>\r\n      <workItem from=\"1704474199681\" duration=\"885000\" />\r\n      <workItem from=\"1704534115796\" duration=\"3923000\" />\r\n      <workItem from=\"1704565798692\" duration=\"2851000\" />\r\n      <workItem from=\"1704568676463\" duration=\"1303000\" />\r\n      <workItem from=\"1704713397739\" duration=\"4672000\" />\r\n      <workItem from=\"1705680032568\" duration=\"1795000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"A\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1704569344337</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1704569344337</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"A\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1705680443696</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1705680443696</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"A\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1705680486327</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1705680486327</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"4\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\r\n    <MESSAGE value=\"A\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"A\" />\r\n  </component>\r\n  <component name=\"com.intellij.coverage.CoverageDataManagerImpl\">\r\n    <SUITE FILE_PATH=\"coverage/Tanks_git$russian.coverage\" NAME=\"russian Coverage Results\" MODIFIED=\"1704566714141\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"coverage.py\" COVERAGE_BY_TEST_ENABLED=\"true\" COVERAGE_TRACING_ENABLED=\"false\" WORKING_DIRECTORY=\"$PROJECT_DIR$\" />\r\n    <SUITE FILE_PATH=\"coverage/Tanks_git$virtrual.coverage\" NAME=\"virtrual Coverage Results\" MODIFIED=\"1704719432384\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"coverage.py\" COVERAGE_BY_TEST_ENABLED=\"true\" COVERAGE_TRACING_ENABLED=\"false\" WORKING_DIRECTORY=\"$PROJECT_DIR$\" />\r\n    <SUITE FILE_PATH=\"coverage/Tanks_git$languages.coverage\" NAME=\"languages Coverage Results\" MODIFIED=\"1704568307055\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"coverage.py\" COVERAGE_BY_TEST_ENABLED=\"true\" COVERAGE_TRACING_ENABLED=\"false\" WORKING_DIRECTORY=\"$PROJECT_DIR$\" />\r\n    <SUITE FILE_PATH=\"coverage/Tanks_git$english.coverage\" NAME=\"english Coverage Results\" MODIFIED=\"1704566710714\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"coverage.py\" COVERAGE_BY_TEST_ENABLED=\"true\" COVERAGE_TRACING_ENABLED=\"false\" WORKING_DIRECTORY=\"$PROJECT_DIR$\" />\r\n    <SUITE FILE_PATH=\"coverage/Tanks_git$main.coverage\" NAME=\"main Coverage Results\" MODIFIED=\"1705688545652\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"coverage.py\" COVERAGE_BY_TEST_ENABLED=\"true\" COVERAGE_TRACING_ENABLED=\"false\" WORKING_DIRECTORY=\"$PROJECT_DIR$\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 16be8fee33e8cd237491a9ef0e1459dbdcb71253)
++++ b/.idea/workspace.xml	(date 1705849645194)
+@@ -5,7 +5,11 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="559e6b81-8dfe-4bca-adc1-d055ac63675b" name="Changes" comment="A">
+-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/data/map.txt" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/data/map2.txt" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/data/map3.txt" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/generation_level.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -48,30 +52,32 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "ASKED_ADD_EXTERNAL_FILES": "true",
+-    "Python.english.executor": "Run",
+-    "Python.languages.executor": "Run",
+-    "Python.main.executor": "Run",
+-    "Python.russian.executor": "Run",
+-    "Python.virtrual.executor": "Run",
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "git-widget-placeholder": "ветвь-МатвейЛеухин",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "nodejs_package_manager_path": "npm",
+-    "vue.rearranger.settings.migration": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
++    &quot;Python.english.executor&quot;: &quot;Run&quot;,
++    &quot;Python.generation_level.executor&quot;: &quot;Run&quot;,
++    &quot;Python.languages.executor&quot;: &quot;Run&quot;,
++    &quot;Python.main.executor&quot;: &quot;Run&quot;,
++    &quot;Python.russian.executor&quot;: &quot;Run&quot;,
++    &quot;Python.tools.executor&quot;: &quot;Run&quot;,
++    &quot;Python.virtrual.executor&quot;: &quot;Run&quot;,
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;ветвь-МатвейЛеухин&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   },
+-  "keyToStringList": {
+-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+-      "Python"
++  &quot;keyToStringList&quot;: {
++    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
++      &quot;Python&quot;
+     ]
+   }
+-}]]></component>
++}</component>
+   <component name="SharedIndexes">
+     <attachedChunks>
+       <set>
+@@ -92,7 +98,9 @@
+       <workItem from="1704565798692" duration="2851000" />
+       <workItem from="1704568676463" duration="1303000" />
+       <workItem from="1704713397739" duration="4672000" />
+-      <workItem from="1705680032568" duration="1795000" />
++      <workItem from="1705680032568" duration="1870000" />
++      <workItem from="1705824163296" duration="3373000" />
++      <workItem from="1705829078464" duration="10961000" />
+     </task>
+     <task id="LOCAL-00001" summary="A">
+       <option name="closed" value="true" />
+@@ -118,7 +126,23 @@
+       <option name="project" value="LOCAL" />
+       <updated>1705680486327</updated>
+     </task>
+-    <option name="localTasksCounter" value="4" />
++    <task id="LOCAL-00004" summary="A">
++      <option name="closed" value="true" />
++      <created>1705688563674</created>
++      <option name="number" value="00004" />
++      <option name="presentableId" value="LOCAL-00004" />
++      <option name="project" value="LOCAL" />
++      <updated>1705688563674</updated>
++    </task>
++    <task id="LOCAL-00005" summary="A">
++      <option name="closed" value="true" />
++      <created>1705688573577</created>
++      <option name="number" value="00005" />
++      <option name="presentableId" value="LOCAL-00005" />
++      <option name="project" value="LOCAL" />
++      <updated>1705688573577</updated>
++    </task>
++    <option name="localTasksCounter" value="6" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -145,6 +169,8 @@
+     <SUITE FILE_PATH="coverage/Tanks_git$virtrual.coverage" NAME="virtrual Coverage Results" MODIFIED="1704719432384" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+     <SUITE FILE_PATH="coverage/Tanks_git$languages.coverage" NAME="languages Coverage Results" MODIFIED="1704568307055" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+     <SUITE FILE_PATH="coverage/Tanks_git$english.coverage" NAME="english Coverage Results" MODIFIED="1704566710714" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+-    <SUITE FILE_PATH="coverage/Tanks_git$main.coverage" NAME="main Coverage Results" MODIFIED="1705688545652" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
++    <SUITE FILE_PATH="coverage/Tanks_git$tools.coverage" NAME="tools Coverage Results" MODIFIED="1705833209226" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/Downloads" />
++    <SUITE FILE_PATH="coverage/Tanks_git$generation_level.coverage" NAME="generation_level Coverage Results" MODIFIED="1705848908790" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
++    <SUITE FILE_PATH="coverage/Tanks_git$main.coverage" NAME="main Coverage Results" MODIFIED="1705688600269" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+   </component>
+ </project>
+\ No newline at end of file

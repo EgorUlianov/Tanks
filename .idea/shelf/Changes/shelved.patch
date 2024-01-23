@@ -1,0 +1,154 @@
+Index: english.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>rus = {'Play': 'Play',\r\n\t'Control': 'Control',\r\n\t'Exit': 'Exit',\r\n\t'Upward': 'Upward',\r\n\t'Left': 'Left',\r\n\t'Right': 'Right',\r\n\t'Backward': 'Backward',\r\n\t'shot': 'shot'\r\n\t}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/english.py b/english.py
+--- a/english.py	(revision 2701aaa3dd4c130282f0e1cfc087cb4bacedba83)
++++ b/english.py	(date 1705676999181)
+@@ -1,9 +1,10 @@
+-rus = {'Play': 'Play',
+-	'Control': 'Control',
+-	'Exit': 'Exit',
+-	'Upward': 'Upward',
+-	'Left': 'Left',
+-	'Right': 'Right',
+-	'Backward': 'Backward',
+-	'shot': 'shot'
+-	}
+\ No newline at end of file
++eng = {'Play': 'Play',
++       'Control': 'Control',
++       'Language': 'Languege',
++       'Exit': 'Exit',
++       'Upward': 'Up',
++       'Left': 'Left',
++       'Right': 'Right',
++       'Backward': 'Backward',
++       'Shot': 'Shot'
++       }
+Index: russian.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>rus = {'Play': 'Играть',\r\n\t'Control': 'Управление',\r\n\t'Exit': 'Выход',\r\n\t'Upward': 'Вверх',\r\n\t'Left': 'Влево',\r\n\t'Right': 'Вправо',\r\n\t'Backward': 'Вниз',\r\n\t'shot': 'Выстрел'\r\n\t}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/russian.py b/russian.py
+--- a/russian.py	(revision 2701aaa3dd4c130282f0e1cfc087cb4bacedba83)
++++ b/russian.py	(date 1705677011971)
+@@ -1,9 +1,10 @@
+ rus = {'Play': 'Играть',
+-	'Control': 'Управление',
+-	'Exit': 'Выход',
+-	'Upward': 'Вверх',
+-	'Left': 'Влево',
+-	'Right': 'Вправо',
+-	'Backward': 'Вниз',
+-	'shot': 'Выстрел'
+-	}
+\ No newline at end of file
++       'Control': 'Управление',
++       'Language': 'Язык',
++       'Exit': 'Выход',
++       'Upward': 'Вверх',
++       'Left': 'Влево',
++       'Right': 'Вправо',
++       'Backward': 'Назад',
++       'Shot': 'Выстрел'
++       }
+Index: main.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># загружаем нужные библиотеки и модули\r\nimport pygame\r\nfrom scripts.scenes.menu import menu_scene\r\nimport scripts.tools as tools\r\n\r\n# проводим инициализацию pygame\r\npygame.init()\r\n\r\n\r\ndefault_options = tools.load_default_options()\r\nsettings = tools.load_user_options()\r\n# Теперь user_options содержит значения из options.txt, и отсутствующие настройки добавлены из default_options\r\n# Сохранение обновленных настроек в файл options.txt\r\ntools.save_user_options(settings)\r\n\r\n# создаём экран\r\ninfo = pygame.display.Info()\r\n\r\n# получение ширины и высоты монитора\r\nscreen_width = pygame.display.Info().current_w\r\nscreen_height = pygame.display.Info().current_h\r\nscreen = pygame.display.set_mode((800, 500), pygame.RESIZABLE)\r\n\r\n# экран на котором всё будет рисоватся, а потом оно растянется\r\nvirtual_surface = pygame.Surface((screen_width, screen_height))\r\n\r\n# переменная в которой будет храниться текущая сцена\r\ncurrent_scene = None\r\n\r\n\r\ndef switch_scene(scene):\r\n    global current_scene\r\n    current_scene = scene\r\n\r\n\r\nswitch_scene(menu_scene)\r\nwhile current_scene is not None:\r\n    current_scene(screen, virtual_surface, switch_scene, settings)\r\n\r\npygame.quit()\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/main.py b/main.py
+--- a/main.py	(revision 2701aaa3dd4c130282f0e1cfc087cb4bacedba83)
++++ b/main.py	(date 1705677989525)
+@@ -1,7 +1,7 @@
+ # загружаем нужные библиотеки и модули
+ import pygame
+-from scripts.scenes.menu import menu_scene
+-import scripts.tools as tools
++import menu
++import tools
+ 
+ # проводим инициализацию pygame
+ pygame.init()
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"559e6b81-8dfe-4bca-adc1-d055ac63675b\" name=\"Changes\" comment=\"A\">\r\n      <change afterPath=\"$PROJECT_DIR$/virtrual.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Python Script\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"PUSH_TAGS\">\r\n      <GitPushTagMode>\r\n        <option name=\"argument\" value=\"--tags\" />\r\n        <option name=\"title\" value=\"All\" />\r\n      </GitPushTagMode>\r\n    </option>\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"ветвь-МатвейЛеухин\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\"><![CDATA[{\r\n  \"associatedIndex\": 8\r\n}]]></component>\r\n  <component name=\"ProjectId\" id=\"2Zce4FQFigoEbSVEYzRRirWvvLA\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Python.english.executor\": \"Run\",\r\n    \"Python.languages.executor\": \"Run\",\r\n    \"Python.main.executor\": \"Run\",\r\n    \"Python.russian.executor\": \"Run\",\r\n    \"Python.virtrual.executor\": \"Run\",\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"git-widget-placeholder\": \"ветвь-МатвейЛеухин\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  },\r\n  \"keyToStringList\": {\r\n    \"com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File\": [\r\n      \"Python\"\r\n    ]\r\n  }\r\n}]]></component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-python-sdk-50da183f06c8-2887949eec09-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.13135.95\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"559e6b81-8dfe-4bca-adc1-d055ac63675b\" name=\"Changes\" comment=\"\" />\r\n      <created>1702725602049</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1702725602049</updated>\r\n      <workItem from=\"1704474199681\" duration=\"885000\" />\r\n      <workItem from=\"1704534115796\" duration=\"3923000\" />\r\n      <workItem from=\"1704565798692\" duration=\"2851000\" />\r\n      <workItem from=\"1704568676463\" duration=\"1303000\" />\r\n      <workItem from=\"1704713397739\" duration=\"4672000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"A\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1704569344337</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1704569344337</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"2\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"A\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"A\" />\r\n  </component>\r\n  <component name=\"com.intellij.coverage.CoverageDataManagerImpl\">\r\n    <SUITE FILE_PATH=\"coverage/Tanks_git$russian.coverage\" NAME=\"russian Coverage Results\" MODIFIED=\"1704566714141\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"coverage.py\" COVERAGE_BY_TEST_ENABLED=\"true\" COVERAGE_TRACING_ENABLED=\"false\" WORKING_DIRECTORY=\"$PROJECT_DIR$\" />\r\n    <SUITE FILE_PATH=\"coverage/Tanks_git$virtrual.coverage\" NAME=\"virtrual Coverage Results\" MODIFIED=\"1704719432384\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"coverage.py\" COVERAGE_BY_TEST_ENABLED=\"true\" COVERAGE_TRACING_ENABLED=\"false\" WORKING_DIRECTORY=\"$PROJECT_DIR$\" />\r\n    <SUITE FILE_PATH=\"coverage/Tanks_git$languages.coverage\" NAME=\"languages Coverage Results\" MODIFIED=\"1704568307055\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"coverage.py\" COVERAGE_BY_TEST_ENABLED=\"true\" COVERAGE_TRACING_ENABLED=\"false\" WORKING_DIRECTORY=\"$PROJECT_DIR$\" />\r\n    <SUITE FILE_PATH=\"coverage/Tanks_git$english.coverage\" NAME=\"english Coverage Results\" MODIFIED=\"1704566710714\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"coverage.py\" COVERAGE_BY_TEST_ENABLED=\"true\" COVERAGE_TRACING_ENABLED=\"false\" WORKING_DIRECTORY=\"$PROJECT_DIR$\" />\r\n    <SUITE FILE_PATH=\"coverage/Tanks_git$main.coverage\" NAME=\"main Coverage Results\" MODIFIED=\"1704474935852\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"coverage.py\" COVERAGE_BY_TEST_ENABLED=\"true\" COVERAGE_TRACING_ENABLED=\"false\" WORKING_DIRECTORY=\"$PROJECT_DIR$\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 2701aaa3dd4c130282f0e1cfc087cb4bacedba83)
++++ b/.idea/workspace.xml	(date 1705678626435)
+@@ -5,8 +5,10 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="559e6b81-8dfe-4bca-adc1-d055ac63675b" name="Changes" comment="A">
+-      <change afterPath="$PROJECT_DIR$/virtrual.py" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/english.py" beforeDir="false" afterPath="$PROJECT_DIR$/english.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/russian.py" beforeDir="false" afterPath="$PROJECT_DIR$/russian.py" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -29,7 +31,7 @@
+     </option>
+     <option name="RECENT_BRANCH_BY_REPOSITORY">
+       <map>
+-        <entry key="$PROJECT_DIR$" value="ветвь-МатвейЛеухин" />
++        <entry key="$PROJECT_DIR$" value="tyran23" />
+       </map>
+     </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+@@ -37,10 +39,13 @@
+   <component name="MarkdownSettingsMigration">
+     <option name="stateVersion" value="1" />
+   </component>
+-  <component name="ProjectColorInfo"><![CDATA[{
+-  "associatedIndex": 8
+-}]]></component>
++  <component name="ProjectColorInfo">{
++  &quot;associatedIndex&quot;: 8
++}</component>
+   <component name="ProjectId" id="2Zce4FQFigoEbSVEYzRRirWvvLA" />
++  <component name="ProjectLevelVcsManager">
++    <OptionsSetting value="false" id="Update" />
++  </component>
+   <component name="ProjectViewState">
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+@@ -55,6 +60,7 @@
+     "RunOnceActivity.OpenProjectViewOnStart": "true",
+     "RunOnceActivity.ShowReadmeOnStart": "true",
+     "git-widget-placeholder": "ветвь-МатвейЛеухин",
++    "last_opened_file_path": "C:/Users/UserHome/PycharmProjects/Pygame_Project_for_Yandex/scripts",
+     "node.js.detected.package.eslint": "true",
+     "node.js.detected.package.tslint": "true",
+     "node.js.selected.package.eslint": "(autodetect)",
+@@ -88,6 +94,7 @@
+       <workItem from="1704565798692" duration="2851000" />
+       <workItem from="1704568676463" duration="1303000" />
+       <workItem from="1704713397739" duration="4672000" />
++      <workItem from="1705676949753" duration="1665000" />
+     </task>
+     <task id="LOCAL-00001" summary="A">
+       <option name="closed" value="true" />
+@@ -123,6 +130,6 @@
+     <SUITE FILE_PATH="coverage/Tanks_git$virtrual.coverage" NAME="virtrual Coverage Results" MODIFIED="1704719432384" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+     <SUITE FILE_PATH="coverage/Tanks_git$languages.coverage" NAME="languages Coverage Results" MODIFIED="1704568307055" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+     <SUITE FILE_PATH="coverage/Tanks_git$english.coverage" NAME="english Coverage Results" MODIFIED="1704566710714" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+-    <SUITE FILE_PATH="coverage/Tanks_git$main.coverage" NAME="main Coverage Results" MODIFIED="1704474935852" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
++    <SUITE FILE_PATH="coverage/Tanks_git$main.coverage" NAME="main Coverage Results" MODIFIED="1705677989534" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+   </component>
+ </project>
+\ No newline at end of file

@@ -1,0 +1,6 @@
+Language English
+Upward W,Up
+Left A,Left
+Right D,Right
+Backward S,Back
+Shot Space
