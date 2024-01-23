@@ -1,0 +1,51 @@
+Index: virtrual.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># загружаем нужные библиотеки и модули\r\nimport pygame\r\nfrom scripts.scenes.menu import menu_scene\r\nimport scripts.tools as tools\r\n\r\n# проводим инициализацию pygame\r\npygame.init()\r\n\r\n\r\ndefault_options = tools.load_default_options()\r\nsettings = tools.load_user_options()\r\n# Теперь user_options содержит значения из options.txt, и отсутствующие настройки добавлены из default_options\r\n# Сохранение обновленных настроек в файл options.txt\r\ntools.save_user_options(settings)\r\n\r\n# создаём экран\r\ninfo = pygame.display.Info()\r\n\r\n# получение ширины и высоты монитора\r\nscreen_width = pygame.display.Info().current_w\r\nscreen_height = pygame.display.Info().current_h\r\nscreen = pygame.display.set_mode((800, 500), pygame.RESIZABLE)\r\n\r\n# экран на котором всё, а потом оно растянется\r\nvirtual_surface = pygame.Surface((screen_width, screen_height))\r\n\r\n# переменная в которой будет храниться текущая сцена\r\ncurrent_scene = None\r\n\r\n\r\ndef switch_scene(scene):\r\n    global current_scene\r\n    current_scene = scene\r\n\r\n\r\nswitch_scene(menu_scene)\r\nwhile current_scene is not None:\r\n    current_scene(screen, virtual_surface, switch_scene, settings)\r\n\r\n\r\npygame.quit()
+===================================================================
+diff --git a/virtrual.py b/virtrual.py
+--- a/virtrual.py	
++++ b/virtrual.py	
+@@ -1,41 +1,0 @@
+-# загружаем нужные библиотеки и модули
+-import pygame
+-from scripts.scenes.menu import menu_scene
+-import scripts.tools as tools
+-
+-# проводим инициализацию pygame
+-pygame.init()
+-
+-
+-default_options = tools.load_default_options()
+-settings = tools.load_user_options()
+-# Теперь user_options содержит значения из options.txt, и отсутствующие настройки добавлены из default_options
+-# Сохранение обновленных настроек в файл options.txt
+-tools.save_user_options(settings)
+-
+-# создаём экран
+-info = pygame.display.Info()
+-
+-# получение ширины и высоты монитора
+-screen_width = pygame.display.Info().current_w
+-screen_height = pygame.display.Info().current_h
+-screen = pygame.display.set_mode((800, 500), pygame.RESIZABLE)
+-
+-# экран на котором всё, а потом оно растянется
+-virtual_surface = pygame.Surface((screen_width, screen_height))
+-
+-# переменная в которой будет храниться текущая сцена
+-current_scene = None
+-
+-
+-def switch_scene(scene):
+-    global current_scene
+-    current_scene = scene
+-
+-
+-switch_scene(menu_scene)
+-while current_scene is not None:
+-    current_scene(screen, virtual_surface, switch_scene, settings)
+-
+-
+-pygame.quit()
+\ No newline at end of file
