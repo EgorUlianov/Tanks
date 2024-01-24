@@ -1,0 +1,23 @@
+import sys
+
+import pygame.image
+
+
+def draw_game_OVER():
+    # картинка игры можно и не делать
+    IMGtANKI = pygame.image.load("заставка.png")
+    #шрифт
+    font = pygame.font.SysFont('stxingkai', 70)
+    #текст 
+    text_game_over = font.render('Game over', True, WHITE)
+
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+        screen.fill(BLACK)
+        screen.blit(text_game_over, (230, 80))
+        screen.blit(pygame.transform.scale(IMGtANKI, [100, 100]) [10, 10])
+        pygame.display.update()
