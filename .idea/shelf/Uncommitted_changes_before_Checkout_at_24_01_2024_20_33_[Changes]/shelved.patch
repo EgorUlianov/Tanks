@@ -1,0 +1,139 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"559e6b81-8dfe-4bca-adc1-d055ac63675b\" name=\"Changes\" comment=\"\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Python Script\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2Zce4FQFigoEbSVEYzRRirWvvLA\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"559e6b81-8dfe-4bca-adc1-d055ac63675b\" name=\"Changes\" comment=\"\" />\r\n      <created>1702725602049</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1702725602049</updated>\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -1,7 +1,13 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="AutoImportSettings">
++    <option name="autoReloadType" value="SELECTIVE" />
++  </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="559e6b81-8dfe-4bca-adc1-d055ac63675b" name="Changes" comment="" />
++    <list default="true" id="559e6b81-8dfe-4bca-adc1-d055ac63675b" name="Changes" comment="">
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -15,22 +21,63 @@
+     </option>
+   </component>
+   <component name="Git.Settings">
++    <option name="RECENT_BRANCH_BY_REPOSITORY">
++      <map>
++        <entry key="$PROJECT_DIR$" value="ЛеухинМатвей" />
++      </map>
++    </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+   <component name="MarkdownSettingsMigration">
+     <option name="stateVersion" value="1" />
+   </component>
+   <component name="ProjectId" id="2Zce4FQFigoEbSVEYzRRirWvvLA" />
++  <component name="ProjectLevelVcsManager">
++    <OptionsSetting value="false" id="Update" />
++    <ConfirmationsSetting value="2" id="Add" />
++  </component>
+   <component name="ProjectViewState">
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+   <component name="PropertiesComponent"><![CDATA[{
+   "keyToString": {
++    "Python.main.executor": "Run",
+     "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true"
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "git-widget-placeholder": "EgorUlianovBranch",
++    "node.js.detected.package.eslint": "true",
++    "node.js.detected.package.tslint": "true",
++    "node.js.selected.package.eslint": "(autodetect)",
++    "node.js.selected.package.tslint": "(autodetect)"
+   }
+ }]]></component>
++  <component name="RunManager">
++    <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
++      <module name="Tanks" />
++      <option name="ENV_FILES" value="" />
++      <option name="INTERPRETER_OPTIONS" value="" />
++      <option name="PARENT_ENVS" value="true" />
++      <envs>
++        <env name="PYTHONUNBUFFERED" value="1" />
++      </envs>
++      <option name="SDK_HOME" value="" />
++      <option name="SDK_NAME" value="Python 3.9" />
++      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
++      <option name="IS_MODULE_SDK" value="false" />
++      <option name="ADD_CONTENT_ROOTS" value="true" />
++      <option name="ADD_SOURCE_ROOTS" value="true" />
++      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
++      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
++      <option name="PARAMETERS" value="" />
++      <option name="SHOW_COMMAND_LINE" value="false" />
++      <option name="EMULATE_TERMINAL" value="false" />
++      <option name="MODULE_MODE" value="false" />
++      <option name="REDIRECT_INPUT" value="false" />
++      <option name="INPUT_FILE" value="" />
++      <method v="2" />
++    </configuration>
++  </component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+     <task active="true" id="Default" summary="Default task">
+@@ -53,4 +100,7 @@
+       </map>
+     </option>
+   </component>
++  <component name="com.intellij.coverage.CoverageDataManagerImpl">
++    <SUITE FILE_PATH="coverage/Tanks_git$main.coverage" NAME="main Coverage Results" MODIFIED="1706110399702" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
++  </component>
+ </project>
+\ No newline at end of file
+Index: main.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pygame\r\nfrom random import randint\r\n\r\npygame.init()\r\n\r\nWIDTH, HEIGHT = 800, 600\r\nFPS = 60\r\nTILE = 57\r\n\r\nwindow = pygame.display.set_mode((WIDTH, HEIGHT))\r\nclock = pygame.time.Clock()\r\n\r\nfontUI = pygame.font.Font(None, 30)\r\n# Кирпичи и степени деградации\r\nimgBrick = [\r\n    pygame.image.load('data/brick1.png'),\r\n    pygame.image.load('data/brick2.png'),\r\n    pygame.image.load('data/brick3.png'),\r\n    pygame.image.load('data/brick4.png'),\r\n    pygame.image.load('data/metall wall.png')\r\n]\r\n# Танки\r\nimgTanks = [\r\n    pygame.image.load('data/t1.png'),\r\n    pygame.image.load('data/t2.png')\r\n]\r\nimgBangs = [\r\n    pygame.image.load('data/bang1.png'),\r\n    pygame.image.load('data/bang2.png'),\r\n    pygame.image.load('data/bang3.png'),\r\n]\r\n\r\nDIRECTS = [[0, -1], [1, 0], [0, 1], [-1, 0]]\r\n\r\n\r\n# Прорисовка\r\nclass UI:\r\n    def __init__(self):\r\n        pass\r\n\r\n    def update(self):\r\n        pass\r\n\r\n    def draw(self):\r\n        i = 0\r\n        for obj in objects:\r\n            if obj.type == 'tank':\r\n                pygame.draw.rect(window, obj.color, (5 + i * 70, 5, 22, 22))\r\n\r\n                text = fontUI.render(str(obj.hp), 1, obj.color)\r\n                rect = text.get_rect(center=(5 + i * 70 + 32, 5 + 11))\r\n                window.blit(text, rect)\r\n                i += 1\r\n\r\n\r\n# Танк\r\nclass Tank:\r\n    def __init__(self, color, px, py, direct, keyList):\r\n        objects.append(self)\r\n        self.type = 'tank'\r\n\r\n        self.color = color\r\n        self.rect = pygame.Rect(px, py, TILE, TILE)\r\n        self.direct = direct\r\n        self.moveSpeed = 2\r\n        self.hp = 5\r\n\r\n        self.shotTimer = 0\r\n        self.shotDelay = 60\r\n        self.bulletSpeed = 5\r\n        self.bulletDamage = 1\r\n\r\n        self.keyLEFT = keyList[0]\r\n        self.keyRIGHT = keyList[1]\r\n        self.keyUP = keyList[2]\r\n        self.keyDOWN = keyList[3]\r\n        self.keySHOT = keyList[4]\r\n        if self.color == 'Blue':\r\n            self.rank = 1\r\n        elif self.color == 'Green':\r\n            self.rank = 0\r\n        self.image = pygame.transform.rotate(imgTanks[self.rank], -self.direct * 90)\r\n        self.rect = self.image.get_rect(center=self.rect.center)\r\n\r\n    # Движение Танка\r\n    def update(self):\r\n        self.image = pygame.transform.rotate(imgTanks[self.rank], -self.direct * 90)\r\n        self.image = pygame.transform.scale(self.image, (self.image.get_width() - 5, self.image.get_height() - 5))\r\n        self.rect = self.image.get_rect(center=self.rect.center)\r\n\r\n        oldX, oldY = self.rect.topleft\r\n        if keys[self.keyLEFT]:\r\n            self.rect.x -= self.moveSpeed\r\n            self.direct = 3\r\n        elif keys[self.keyRIGHT]:\r\n            self.rect.x += self.moveSpeed\r\n            self.direct = 1\r\n        elif keys[self.keyUP]:\r\n            self.rect.y -= self.moveSpeed\r\n            self.direct = 0\r\n        elif keys[self.keyDOWN]:\r\n            self.rect.y += self.moveSpeed\r\n            self.direct = 2\r\n\r\n        for obj in objects:\r\n            if obj != self and (obj.type == 'block' or obj.type == 'border') and self.rect.colliderect(obj.rect):\r\n                self.rect.topleft = oldX, oldY\r\n\r\n        # Стрельба\r\n        if keys[self.keySHOT] and self.shotTimer == 0:\r\n            dx = DIRECTS[self.direct][0] * self.bulletSpeed\r\n            dy = DIRECTS[self.direct][1] * self.bulletSpeed\r\n            Bullet(self, self.rect.centerx, self.rect.centery, dx, dy, self.bulletDamage)\r\n            self.shotTimer = self.shotDelay\r\n\r\n        if self.shotTimer > 0: self.shotTimer -= 1\r\n\r\n    def draw(self):\r\n        window.blit(self.image, self.rect)\r\n\r\n    # Получение урона\r\n    def damage(self, value):\r\n        self.hp -= value\r\n        if self.hp <= 0:\r\n            objects.remove(self)\r\n            Bang(self.rect.x, self.rect.y, 3)\r\n            print(self.color, 'dead')\r\n\r\n\r\n# Пули\r\nclass Bullet:\r\n    def __init__(self, parent, px, py, dx, dy, damage):\r\n        bullets.append(self)\r\n        self.parent = parent\r\n        self.px, self.py = px, py\r\n        self.dx, self.dy = dx, dy\r\n        self.damage = damage\r\n    # Движение пули\r\n    def update(self):\r\n        self.px += self.dx\r\n        self.py += self.dy\r\n\r\n        if self.px < 0 or self.px > WIDTH or self.py < 0 or self.py > HEIGHT:\r\n            bullets.remove(self)\r\n        else:\r\n            for obj in objects:\r\n                if obj != self.parent and obj.type != 'bang' and obj.rect.collidepoint(self.px, self.py):\r\n                    obj.damage(self.damage)\r\n                    bullets.remove(self)\r\n                    Bang(self.px, self.py, 0)\r\n                    break\r\n\r\n    def draw(self):\r\n        pygame.draw.circle(window, 'yellow', (self.px, self.py), 2)\r\n\r\n\r\n# Взрыв\r\nclass Bang:\r\n    def __init__(self, px, py, frame):\r\n        objects.append(self)\r\n        self.type = 'bang'\r\n\r\n        self.px, self.py = px, py\r\n        self.frame = frame\r\n\r\n    def update(self):\r\n        self.frame += 0.2\r\n        if self.frame >= 3: objects.remove(self)\r\n\r\n    def draw(self):\r\n        image = imgBangs[int(self.frame)]\r\n        rect = image.get_rect(center=(self.px, self.py))\r\n        window.blit(image, rect)\r\n\r\n\r\n# Кирпичные стены\r\nclass Block:\r\n    def __init__(self, px, py, size):\r\n        objects.append(self)\r\n        self.type = 'block'\r\n\r\n        self.rect = pygame.Rect(px, py, size, size)\r\n        self.hp = 4\r\n\r\n    def update(self):\r\n        pass\r\n\r\n    def draw(self):\r\n        window.blit(imgBrick[self.hp - 1], self.rect)\r\n\r\n    # Получение урона\r\n    def damage(self, value):\r\n        self.hp -= value\r\n        if self.hp <= 0: objects.remove(self)\r\n\r\n\r\n# Металлическая стенка\r\nclass MetalBlock:\r\n    def __init__(self, px, py, size):\r\n        objects.append(self)\r\n        self.type = 'block'\r\n\r\n        self.rect = pygame.Rect(px, py, size, size)\r\n        self.hp = -1\r\n\r\n    def update(self):\r\n        pass\r\n\r\n    def draw(self):\r\n        window.blit(imgBrick[4], self.rect)\r\n\r\n    def damage(self, value):\r\n        pass\r\n\r\n\r\n# Границы, чтобы танки не уезжали за экран\r\nclass Border():\r\n    # строго вертикальный или строго горизонтальный отрезок\r\n    def __init__(self, x1, y1, x2, y2):\r\n        objects.append(self)\r\n        self.type = 'border'\r\n        if x1 == x2:  # вертикальная стенка\r\n            self.image = pygame.Surface([1, y2 - y1])\r\n            self.rect = pygame.Rect(x1, y1, 1, y2 - y1)\r\n        else:  # горизонтальная стенка\r\n            self.image = pygame.Surface([x2 - x1, 1])\r\n            self.rect = pygame.Rect(x1, y1, x2 - x1, 1)\r\n\r\n    def update(self):\r\n        pass\r\n\r\n    def draw(self):\r\n        pass\r\n\r\n\r\nbullets = []\r\nobjects = []\r\nTank('Blue', 100, 275, -1, (pygame.K_a, pygame.K_d, pygame.K_w, pygame.K_s, pygame.K_SPACE))\r\nTank('Green', 650, 275, -2, (pygame.K_LEFT, pygame.K_RIGHT, pygame.K_UP, pygame.K_DOWN, pygame.K_KP_ENTER))\r\nui = UI()\r\nBorder(0, 0, 0, HEIGHT)\r\nBorder(WIDTH, 0, WIDTH, HEIGHT)\r\nBorder(0, 0, WIDTH, 0)\r\nBorder(0, HEIGHT, WIDTH, HEIGHT)\r\n# Рандом генерация\r\nfor _ in range(50):\r\n    while True:\r\n        x = randint(0, WIDTH // TILE - 1) * TILE\r\n        y = randint(1, HEIGHT // TILE - 1) * TILE\r\n        rect = pygame.Rect(x, y, TILE, TILE)\r\n        fined = False\r\n        for obj in objects:\r\n            if rect.colliderect(obj.rect): fined = True\r\n\r\n        if not fined: break\r\n\r\n    Block(x, y, TILE)\r\n\r\nplay = True\r\nwhile play:\r\n    for event in pygame.event.get():\r\n        if event.type == pygame.QUIT:\r\n            play = False\r\n\r\n    keys = pygame.key.get_pressed()\r\n\r\n    for bullet in bullets: bullet.update()\r\n    for obj in objects: obj.update()\r\n    ui.update()\r\n\r\n    window.fill('black')\r\n    for bullet in bullets: bullet.draw()\r\n    for obj in objects: obj.draw()\r\n    ui.draw()\r\n    pygame.display.update()\r\n    clock.tick(FPS)\r\n\r\npygame.quit()\r\n
+===================================================================
+diff --git a/main.py b/main.py
+--- a/main.py	
++++ b/main.py	
+@@ -13,21 +13,21 @@
+ fontUI = pygame.font.Font(None, 30)
+ # Кирпичи и степени деградации
+ imgBrick = [
+-    pygame.image.load('data/brick1.png'),
+-    pygame.image.load('data/brick2.png'),
+-    pygame.image.load('data/brick3.png'),
+-    pygame.image.load('data/brick4.png'),
+-    pygame.image.load('data/metall wall.png')
++    pygame.image.load('image/brick.png'),
++    pygame.image.load('image/brick1.png'),
++    pygame.image.load('image/brick2.png'),
++    pygame.image.load('image/brick3.png'),
++    pygame.image.load('image/metall wall.png')
+ ]
+ # Танки
+ imgTanks = [
+-    pygame.image.load('data/t1.png'),
+-    pygame.image.load('data/t2.png')
++    pygame.image.load('image/t1.png'),
++    pygame.image.load('image/t2.png')
+ ]
+ imgBangs = [
+-    pygame.image.load('data/bang1.png'),
+-    pygame.image.load('data/bang2.png'),
+-    pygame.image.load('data/bang3.png'),
++    pygame.image.load('image/blast hit.png'),
++    pygame.image.load('image/wound.png'),
++    pygame.image.load('image/kill.png'),
+ ]
+ 
+ DIRECTS = [[0, -1], [1, 0], [0, 1], [-1, 0]]
