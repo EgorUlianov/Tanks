@@ -1,7 +1,42 @@
+# загружаем нужные библиотеки и модули
 import pygame
-from random import randint
+from scripts.scenes.menu import menu_scene
+import scripts.tools as tools
 
+# проводим инициализацию pygame
 pygame.init()
+
+
+default_options = tools.load_default_options()
+settings = tools.load_user_options()
+# Теперь user_options содержит значения из options.txt, и отсутствующие настройки добавлены из default_options
+# Сохранение обновленных настроек в файл options.txt
+tools.save_user_options(settings)
+
+# создаём экран
+info = pygame.display.Info()
+
+# получение ширины и высоты монитора
+screen_width = pygame.display.Info().current_w
+screen_height = pygame.display.Info().current_h
+screen = pygame.display.set_mode((800, 500), pygame.RESIZABLE)
+
+# экран на котором всё будет рисоватся, а потом оно растянется
+virtual_surface = pygame.Surface((screen_width, screen_height))
+
+# переменная в которой будет храниться текущая сцена
+current_scene = None
+
+
+def switch_scene(scene):
+    global current_scene
+    current_scene = scene
+
+
+switch_scene(menu_scene)
+while current_scene is not None and current_scene != 'Game':
+    current_scene(screen, virtual_surface, switch_scene, settings)
+
 
 WIDTH, HEIGHT = 570, 627
 FPS = 30
@@ -224,7 +259,7 @@ class Bullet:
                     break
 
     def draw(self):
-        pygame.draw.circle(window, 'yellow', (self.px, self.py), 2)
+        pygame.draw.circle(window, 'yellow', (self.px, self.py), 5)
 
 
 # Взрыв
@@ -355,10 +390,13 @@ Border(WIDTH, 0, WIDTH, HEIGHT)
 Border(0, 57, WIDTH, 0)
 Border(0, HEIGHT, WIDTH, HEIGHT)
 # Рандом генерация
-
+if current_scene == 'Game':
+    play = True
+else:
+    play = False
 level = 0
 generate_level(load_level(maps[level]))
-play = True
+
 while play:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -382,14 +420,33 @@ while play:
     pygame.display.update()
     clock.tick(FPS)
     if len(tanks) < 2:
-        tanks.clear()
+        bullets.clear()
+
+        window.fill('black')
+        for obj in objects: obj.draw()
+        for tank in tanks: tank.draw()
+        for bush in bushes: bush.draw()
+        pygame.display.update()
         clock.tick(1)
         objects.clear()
+        window.fill('black')
+        for tank in tanks: tank.draw()
+        for bush in bushes: bush.draw()
+        pygame.display.update()
         clock.tick(1)
         bushes.clear()
+        window.fill('black')
         clock.tick(1)
-        bullets.clear()
+        window.fill('black')
+        for tank in tanks: tank.draw()
+        pygame.display.update()
+        tanks.clear()
         clock.tick(1)
-        level += 1
+        window.fill('black')
+        pygame.display.update()
+        clock.tick(1)
+        if level != 2:
+            level += 1
+
         generate_level(load_level(maps[level]))
 pygame.quit()
