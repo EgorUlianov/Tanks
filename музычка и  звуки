@@ -1,0 +1,44 @@
+#музыка загрузочного экрана
+pygame.mixer.music.load('sounds/level_start.mp3')
+pygame.mixer.music.play()
+
+#звуки взрывов 
+sndShot = pygame.mixer.Sound('sounds/shot.wav')
+sndDestroy = pygame.mixer.Sound('sounds/destroy.wav')
+# Пули
+class Bullet:
+    def __init__(self, parent, px, py, dx, dy, damage):
+        bullets.append(self)
+        self.parent = parent
+        self.px, self.py = px, py
+        self.dx, self.dy = dx, dy
+        self.damage = damage
+    # Движение пули
+
+    def update(self):
+        self.px += self.dx
+        self.py += self.dy
+
+        if self.px < 0 or self.px > WIDTH or self.py < 0 or self.py > HEIGHT:
+            bullets.remove(self)
+        else:
+            for obj in objects:
+                if obj != self.parent and obj.type != 'bang' and \
+                        obj.rect.collidepoint(self.px, self.py):
+                    obj.damage(self.damage)
+                    bullets.remove(self)
+                    Bang(self.px, self.py, 0)
+# сюда всталяем 
+                    sndDestroy.play()
+                    break
+            for tank in tanks:
+                if tank != self.parent and tank.rect.collidepoint(self.px, self.py):
+                    tank.damage(self.damage)
+                    bullets.remove(self)
+                    Bang(self.px, self.py, 0)
+#и сюда
+                    sndShot.play()
+                    break
+
+    def draw(self):
+        pygame.draw.circle(window, 'yellow', (self.px, self.py), 5)
