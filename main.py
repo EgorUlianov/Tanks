@@ -2,7 +2,6 @@
 import pygame
 from scripts.scenes.menu import menu_scene
 import scripts.tools as tools
-
 # проводим инициализацию pygame
 pygame.init()
 
@@ -64,7 +63,8 @@ imgTanks = [
      pygame.image.load('data/t1fr4.png'),
      pygame.image.load('data/t1fr5.png'),
      pygame.image.load('data/t1fr6.png'),
-     pygame.image.load('data/t1fr7.png')
+     pygame.image.load('data/t1fr7.png'),
+     pygame.image.load('data/t1.png')
      ],
     [pygame.image.load('data/t2fr1.png'),
      pygame.image.load('data/t2fr2.png'),
@@ -72,23 +72,30 @@ imgTanks = [
      pygame.image.load('data/t2fr4.png'),
      pygame.image.load('data/t2fr5.png'),
      pygame.image.load('data/t2fr6.png'),
-     pygame.image.load('data/t2fr7.png')
+     pygame.image.load('data/t2fr7.png'),
+     pygame.image.load('data/t2.png')
      ]
 ]
+# Взрыв
 imgBangs = [
     pygame.image.load('data/bang1.png'),
     pygame.image.load('data/bang2.png'),
     pygame.image.load('data/bang3.png'),
 ]
-
+# Карты
 maps = [
     'data/map1.txt',
     'data/map2.txt',
     'data/map3.txt'
 ]
-
-
+# Звуки
+pygame.mixer.music.load('data/level_start.mp3')
+pygame.mixer.music.play()
+sndShot = pygame.mixer.Sound('data/shot.mp3')
 DIRECTS = [[0, -1], [1, 0], [0, 1], [-1, 0]]
+
+green_wins = 0
+blue_wins = 0
 
 
 def load_level(filename):
@@ -102,7 +109,7 @@ def load_level(filename):
     # дополняем каждую строку пустыми клетками ('.')
     return list(map(lambda x: x.ljust(max_width, '.'), level_map))
 
-
+# Генерация уровня
 def generate_level(level):
     for y in range(len(level)):
         for x in range(len(level[y])):
@@ -119,6 +126,10 @@ def generate_level(level):
                      (pygame.K_LEFT, pygame.K_RIGHT, pygame.K_UP, pygame.K_DOWN, pygame.K_KP_ENTER))
             elif level[y][x] == '_':
                 Tank('Blue', x * TILE, (y + 1) * TILE, -2, (pygame.K_a, pygame.K_d, pygame.K_w, pygame.K_s, pygame.K_SPACE))
+            Border(0, 57, 0, HEIGHT)
+            Border(WIDTH, 0, WIDTH, HEIGHT)
+            Border(0, 57, WIDTH, 0)
+            Border(0, HEIGHT, WIDTH, HEIGHT)
 
 # Прорисовка
 class UI:
@@ -169,12 +180,12 @@ class Tank:
         self.image = pygame.transform.rotate(imgTanks[self.rank][self.anim], -self.direct * 90)
         self.rect = self.image.get_rect(center=self.rect.center)
 
-    # Движение Танка
+    # Движение Танка + Анимация
     def update(self):
         self.image = pygame.transform.rotate(imgTanks[self.rank][self.anim], -self.direct * 90)
         self.image = pygame.transform.scale(self.image, (self.image.get_width() - 5, self.image.get_height() - 5))
         self.rect = self.image.get_rect(center=self.rect.center)
-
+        
         oldX, oldY = self.rect.topleft
         if keys[self.keyLEFT]:
             self.rect.x -= self.moveSpeed
@@ -223,6 +234,12 @@ class Tank:
     def damage(self, value):
         self.hp -= value
         if self.hp <= 0:
+            if self.color == "Green":
+                global blue_wins
+                blue_wins += 1
+            else:
+                global green_wins
+                green_wins += 1
             tanks.remove(self)
             print(self.color, 'dead')
 
@@ -250,12 +267,15 @@ class Bullet:
                     obj.damage(self.damage)
                     bullets.remove(self)
                     Bang(self.px, self.py, 0)
+                    sndShot.play()
                     break
+
             for tank in tanks:
                 if tank != self.parent and tank.rect.collidepoint(self.px, self.py):
                     tank.damage(self.damage)
                     bullets.remove(self)
                     Bang(self.px, self.py, 0)
+                    sndShot.play()
                     break
 
     def draw(self):
@@ -343,7 +363,7 @@ class Border():
     def damage(self, value):
         pass
 
-
+# Пол
 class Floor:
     def __init__(self, px, py, size):
         objects.append(self)
@@ -361,7 +381,7 @@ class Floor:
     def damage(self, value):
         pass
 
-
+# Кусты
 class Bush:
     def __init__(self, px, py, size):
         bushes.append(self)
@@ -385,25 +405,21 @@ objects = []
 tanks = []
 bushes = []
 ui = UI()
-Border(0, 57, 0, HEIGHT)
-Border(WIDTH, 0, WIDTH, HEIGHT)
-Border(0, 57, WIDTH, 0)
-Border(0, HEIGHT, WIDTH, HEIGHT)
 # Рандом генерация
 if current_scene == 'Game':
     play = True
 else:
     play = False
-level = 0
+level = 2
 generate_level(load_level(maps[level]))
-
+# ИГРА!
 while play:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             play = False
 
     keys = pygame.key.get_pressed()
-
+    # Прорисовка
     for obj in objects: obj.update()
     for tank in tanks: tank.update()
     for bullet in bullets: bullet.update()
@@ -419,9 +435,12 @@ while play:
     ui.draw()
     pygame.display.update()
     clock.tick(FPS)
+    # Конец уровня
     if len(tanks) < 2:
+        pygame.mixer.music.load('data/level_start.mp3')
+        pygame.mixer.music.play()
         bullets.clear()
-
+        # Анимация исчезновения
         window.fill('black')
         for obj in objects: obj.draw()
         for tank in tanks: tank.draw()
@@ -447,6 +466,12 @@ while play:
         clock.tick(1)
         if level != 2:
             level += 1
+            generate_level(load_level(maps[level]))
+        else:
+            # Сохранение данных
+            new_data = f'Побед у синего танка:{blue_wins} \n Побед у зелёного танка:{green_wins}'
+            with open('results.txt', 'w') as f:
+                f.write(new_data)
+            play = False
 
-        generate_level(load_level(maps[level]))
 pygame.quit()
