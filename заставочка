@@ -4,8 +4,6 @@ import pygame.image
 
 
 def draw_game_OVER():
-    # картинка игры можно и не делать
-    IMGtANKI = pygame.image.load("заставка.png")
     #шрифт
     font = pygame.font.SysFont('stxingkai', 70)
     #текст 
